@@ -14,6 +14,26 @@ it's basically saying to the compiler
 **what does "return Foreach(iteratablething, content:{})" say?**
 + it's going to iterate over this iteratable thing, and for each of the thing, it will build one of these views.
 
+How is the space on-screen apportioned to the views?
+It's amazingly simple ...
+1. Container Views(HStack, VStack, ...) "offer" space to the Views inside them.
+2. Views then choose that size they want to be.
+3. Container Views then position the Views inside of them.
+
+### Container Views
+They divide the space offered to them.
+ForEach defers to its container to lay out the Views inside of it.
+** offers space to its most "inflexible" views first.
+Modifiers (e.g. .padding()) essentially "contain" the View they modify. Some do layout.
+
+### @ViewBuilder 
+add @ViewBuilder to the function which returns some View turns the thing in the curly brace into a list of Views.(2 ~ 10 Views as a TupleView)
+
+### ViewModifier
+Modifier a View and return a new View
+They probably turn right and call a function in View called modifier.
+.aspectRatio(2/3) -> .modifier(AspectRatio(2/3)) where AspectRatio() can be anything conforms to ViewModifier protocol
+
 ## MVVM Model-View-ViewModel
 + A "code organizing" architectural design paradigm.
 + Works in concert with the concept of "reactive" user-interfaces.
@@ -73,6 +93,25 @@ VIEW (auto, observes, publications, pulls data and rebuilds)
 + The ViewModel in MVVM is always a class (also, UIKit (old style ios) is class-based)
 private(set) self can modify, but anyone can see
 
+use mutating func when the function changes the class itself
+call init are mutatin, so you don't have to say mutating before init.
+objectWillChange.send() will tell the UI(View) that the model is going to change.
+@ObservedObject says that viewModel has a observable object. everytime the .send(), it redraws. SwiftUI is intelligent enough to tell what exactly has changed, so don't worry about efficiency.(Because cards are identifiable ...)
+
+### Protocol
+a stripped down class, has var and functions, but have no implementation.(and storage)
+similar to the virtual class.
+can inheritance
+
+use extension keyword to implement protocals
+** Why Protocals? **
+it's about how data structures in our application function.
+Even when we talk about vars in the context of protocals, we don't define how they're stored. We only focus on the functionality and hide the implementation details behind it.
+It's the promise of encapsulation from OOP but to a higher level.
+
+### enum
+An discrete data type
+
 ### Generics
 Example of a user of a "don't care" type: array
 ```swift
@@ -84,4 +123,6 @@ var a = Array<int>()
 a.append(5);a.append(22)
 // can have mutiple "don't cares"(type parameter), like <Element, Foo>
 ```
+
+
 
