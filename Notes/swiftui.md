@@ -34,6 +34,26 @@ Modifier a View and return a new View
 They probably turn right and call a function in View called modifier.
 .aspectRatio(2/3) -> .modifier(AspectRatio(2/3)) where AspectRatio() can be anything conforms to ViewModifier protocol
 
+### Animation
+Animation is a smoothed out portrayal in your UI...
+... over a period of time (which is configurable and usually brief)
+... of a change that has already happened (very recently)
+
+point of animation is to make the user experience less abrupted and draw their attention to things that are changing
+
+Animation works only on Views in container already on screen
+only work on modifier
+.animation is more like .font, it will pass down to everything inside the container
+while .padding takes up space and pass the space left to the things inside the container
+
+### Transitions
+Transitions specify how to animate the arrival/departure of Views in CTAAOS.
+Just a pair of ViewModifiers.
+One of the modifier is the "before" viewmodifier of the View that's on the move
+Another is the "after" one.
+just a version of "changes in arguments to view modifiers" animation.
+**Transition** is like .padding, attached to the whole ViewContainer
+
 ## MVVM Model-View-ViewModel
 + A "code organizing" architectural design paradigm.
 + Works in concert with the concept of "reactive" user-interfaces.
@@ -102,6 +122,11 @@ objectWillChange.send() will tell the UI(View) that the model is going to change
 a stripped down class, has var and functions, but have no implementation.(and storage)
 similar to the virtual class.
 can inheritance
+
+### property obsevers
+essentially a way to execute code when the var changes
+** completely unrelated to computed vars **
+to use temporary value, use @State var ...: someType (the var is stored in heap), the address is fixed,so it's kept after the view redraws
 
 use extension keyword to implement protocals
 ** Why Protocals? **
