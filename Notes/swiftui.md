@@ -54,6 +54,20 @@ Another is the "after" one.
 just a version of "changes in arguments to view modifiers" animation.
 **Transition** is like .padding, attached to the whole ViewContainer
 
+### image
+Image serves as a View
+UIImage is the type for actually creating / manipulating images and store in vars.
+very powerful representation of an image
+
+### Gestures
+@GestureState var myGestureState = <starting value> 
+it only changes when the gesture is active
+when the gesture ends, the value is set to the starting value
+
+## Multithreading
+** never block your UI **
+
+
 ## MVVM Model-View-ViewModel
 + A "code organizing" architectural design paradigm.
 + Works in concert with the concept of "reactive" user-interfaces.
