@@ -162,6 +162,43 @@ var a = Array<int>()
 a.append(5);a.append(22)
 // can have mutiple "don't cares"(type parameter), like <Element, Foo>
 ```
+### Property Wrappers
+property wrappers are basically structs. (syntactic sugar)
+```swift
+@published var emojiArt: EmojiArt = EmojiArt()
+... is really just this struct ...
+struct published {
+    var wrappedValue: EmojiArt
+    var projectedValue: Publisher<EmojiArt, Never>
+}
+```
+... and Swift (approximately) makes these vars available to you ...
+```swift
+var _emojiArt: Published = Published(wrappedValue: EmojiArt())
+var emojiArt: EmojiArt {
+    get { _emojiArt.wrappedValue }
+    set { _emojiArt.wrappedValue = newValue}
+}
+```
+can access projectedValue by asking $emojiArt
+#### @Published
+It publishes the change through its projectedValue ($emojiArt) which is a publisher.
+It also invokes objectWillChange.send() in its enclosing ObservableObject.
 
+#### @State
+stores the wrappedValue in the heap; when it changes, invalidates the View.
+Projected value (i.e. $): a Binding (to that value in the heap)
 
+### @ObservedObject
+wrappedValue: anything that implements the ObservableObject protocol (ViewModels)
+what it does: invalidates the View when wrappedValue does objectWillChange.send().
+Projected value
 
+#### Bindings
+one piece of source of truth
+
+#### @EnvironmentObject
+same as @ObservedObject, put passed to a view in a different way ...
+wrappedValue: ObservableObject obtained via .environmentObject() sent to the View.
+What is does: invalidates the View when wrappedValue does objectWillChange.send()
+Projected value: a Binding (to the vars of the wrappedValue(a ViewModel)).
